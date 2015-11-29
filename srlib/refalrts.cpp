@@ -3010,7 +3010,7 @@ refalrts::FnResult refalrts::new_interpret_array(
     i++;
   }
 
-  while(i >= 0)
+  while(raa[i].cmd != icEnd)
   {
     int index = 0;
     //Компоновка стека
