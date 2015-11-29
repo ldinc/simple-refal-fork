@@ -2,7 +2,6 @@
 #define RefalRTS_H_
 
 #include <stdio.h>
-//for debug only
 
 namespace refalrts {
 
@@ -10,9 +9,7 @@ typedef enum FnResult {
   cRecognitionImpossible = 0,
   cNoMemory = 1,
   cSuccess = 2,
-  cExit = 3,
-  cEndErr = 4,
-  cPatternMismatch = 5
+  cExit = 3
 } FnResult;
 
 typedef struct Node Node;
@@ -74,9 +71,6 @@ typedef struct Node {
   };
 } Node;
 
-
-
-
 typedef enum iCmd {
   icChar,
   icInt,
@@ -88,45 +82,7 @@ typedef enum iCmd {
   icSpliceEVar,
   icCopySTVar,
   icCopyEVar,
-  icEnd,
-  icBoundSet,
-  icBoundMoveLeft,
-  icBoundMoveRight,
-  icBoundEmptySeq,
-  icBracketLeft,
-  icBracketRight,
-  icEmpty,
-  icMoveLeft,
-  icMoveRight,
-  icEPush,
-  icContextSet,
-  icsVarRight,
-  icsVarLeft,
-  ictVarRight,
-  ictVarLeft,
-  icNumRight,
-  icNumLeft,
-  icIdentRight,
-  icIdentLeft,
-  icADTRight,
-  icADTLeft,
-  icPushFPtr,
-  icFuncRight,
-  icFuncLeft,
-  icCharRight,
-  icCharLeft,
-  iceRepeatRight,
-  iceRepeatLeft,
-  icsRepeatRight,
-  icsRepeatLeft,
-  ictRepeatRight,
-  ictRepeatLeft,
-  icSave,
-  icEStart,
-  icEStop,
-  icBreak,
-  icPattern,
-  icResult
+  icEnd
 } iCmd;
 
 typedef enum BracketType {
@@ -147,9 +103,7 @@ typedef struct ResultAction {
 
 extern void use( Iter& );
 
-void zeros( Iter context[], int size );
-
-// Операции распознавания образца
+// РћРїРµСЂР°С†РёРё СЂР°СЃРїРѕР·РЅР°РІР°РЅРёСЏ РѕР±СЂР°Р·С†Р°
 
 extern void move_left( Iter& begin, Iter& end );
 extern void move_right( Iter& begin, Iter& end );
@@ -211,7 +165,7 @@ extern unsigned read_chars(
   char buffer[], unsigned buflen, Iter& first, Iter& last
 );
 
-// Операции построения результата
+// РћРїРµСЂР°С†РёРё РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚Р°
 
 extern void reset_allocator();
 
@@ -263,16 +217,16 @@ extern void splice_to_freelist( Iter first, Iter last );
 extern void splice_from_freelist( Iter pos );
 
 extern FnResult create_closure( Iter begin, Iter end );
-Iter unwrap_closure( Iter closure ); // Развернуть замыкание
-Iter wrap_closure( Iter closure ); // Свернуть замыкание
+Iter unwrap_closure( Iter closure ); // Р Р°Р·РІРµСЂРЅСѓС‚СЊ Р·Р°РјС‹РєР°РЅРёРµ
+Iter wrap_closure( Iter closure ); // РЎРІРµСЂРЅСѓС‚СЊ Р·Р°РјС‹РєР°РЅРёРµ
 
-// Работа со статическими ящиками
+// Р Р°Р±РѕС‚Р° СЃРѕ СЃС‚Р°С‚РёС‡РµСЃРєРёРјРё СЏС‰РёРєР°РјРё
 
 extern Iter initialize_swap_head( Iter head );
 extern void swap_info_bounds( Iter& first, Iter& last, Iter head );
 extern void swap_save( Iter head, Iter first, Iter last );
 
-// Профилирование
+// РџСЂРѕС„РёР»РёСЂРѕРІР°РЅРёРµ
 
 extern void this_is_generated_function();
 extern void start_sentence();
@@ -302,7 +256,7 @@ enum PerformanceCounters {
 extern unsigned long ticks_per_second();
 extern void read_performance_counters(unsigned long counters[]);
 
-// Прочие функции
+// РџСЂРѕС‡РёРµ С„СѓРЅРєС†РёРё
 
 extern void set_return_code( int retcode );
 extern void use_counter( unsigned& counter );
@@ -312,34 +266,23 @@ inline void set_return_code( RefalNumber retcode ) {
 }
 
 /*
-  Функция производит печать рефал-выражения в поток file
-  в том же формате, как и при отладочном дампе памяти.
+  Р¤СѓРЅРєС†РёСЏ РїСЂРѕРёР·РІРѕРґРёС‚ РїРµС‡Р°С‚СЊ СЂРµС„Р°Р»-РІС‹СЂР°Р¶РµРЅРёСЏ РІ РїРѕС‚РѕРє file
+  РІ С‚РѕРј Р¶Рµ С„РѕСЂРјР°С‚Рµ, РєР°Рє Рё РїСЂРё РѕС‚Р»Р°РґРѕС‡РЅРѕРј РґР°РјРїРµ РїР°РјСЏС‚Рё.
 
-  Переменная file представляет собой стандартный файловый
-  поток FILE* из stdio.h. Сделана она была void* только
-  для того, чтобы не включать сюда лишние заголовочные файлы
-  (пусть даже и стандартные).
+  РџРµСЂРµРјРµРЅРЅР°СЏ file РїСЂРµРґСЃС‚Р°РІР»СЏРµС‚ СЃРѕР±РѕР№ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ С„Р°Р№Р»РѕРІС‹Р№
+  РїРѕС‚РѕРє FILE* РёР· stdio.h. РЎРґРµР»Р°РЅР° РѕРЅР° Р±С‹Р»Р° void* С‚РѕР»СЊРєРѕ
+  РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РЅРµ РІРєР»СЋС‡Р°С‚СЊ СЃСЋРґР° Р»РёС€РЅРёРµ Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹Рµ С„Р°Р№Р»С‹
+  (РїСѓСЃС‚СЊ РґР°Р¶Рµ Рё СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ).
 */
 void debug_print_expr(void *file, Iter first, Iter last);
 
-// Интерпретатор
+// РРЅС‚РµСЂРїСЂРµС‚Р°С‚РѕСЂ
 
 extern FnResult interpret_array(
   const ResultAction raa[],
   Iter allocs[],
   Iter begin,
   Iter end
-);
-
-// extended interpret_array by rigth part
-
-extern FnResult new_interpret_array(
-  ResultAction raa[],
-  Iter allocs[],
-  Iter context[],
-  Iter begin,
-  Iter end,
-	unsigned long context_size
 );
 
 } //namespace refalrts

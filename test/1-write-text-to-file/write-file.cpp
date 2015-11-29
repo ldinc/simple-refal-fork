@@ -20,91 +20,52 @@ static refalrts::FnResult Func(refalrts::Iter arg_begin, refalrts::Iter arg_end)
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // issue here memory for vars with 8 elems
-    refalrts::Iter context[8];
-    refalrts::zeros( context, 8);
-    const int __eFilePath_1_1 = 0;
     static refalrts::Iter eFilePath_1_b_1;
     static refalrts::Iter eFilePath_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [FilePath] Depth[1] Usings[1]
-    const int __eText_1_1 = 2;
     static refalrts::Iter eText_1_b_1;
     static refalrts::Iter eText_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [Text] Depth[1] Usings[1]
-    const int __eFilePath_1_2 = 4;
     static refalrts::Iter eFilePath_1_b_2;
     static refalrts::Iter eFilePath_1_e_2;
-    
-    //debug ::varInfo:: Mode[e] Index [FilePath] Depth[1] Usings[2]
-    const int __eText_1_2 = 6;
     static refalrts::Iter eText_1_b_2;
     static refalrts::Iter eText_1_e_2;
-    
-    //debug ::varInfo:: Mode[e] Index [Text] Depth[1] Usings[2]
     // ( e.FilePath#1 ) ( e.Text#1 )
     refalrts::Iter bb_1 = 0;
     refalrts::Iter be_1 = 0;
-    refalrts::EIter __bracket_1  = {0, 0};
-    #ifndef INTERPRET
     if( ! refalrts::brackets_left( bb_1, be_1, bb_0, be_0 ) )
       break;
-    #endif
     refalrts::Iter bb_2 = 0;
     refalrts::Iter be_2 = 0;
-    refalrts::EIter __bracket_2  = {0, 0};
-    #ifndef INTERPRET
     if( ! refalrts::brackets_left( bb_2, be_2, bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     if( ! refalrts::empty_seq( bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     eFilePath_1_b_1 = bb_1;
     eFilePath_1_e_1 = be_1;
-    #endif
-    // HOHO HAHA
-    #ifndef INTERPRET
     eText_1_b_1 = bb_2;
     eText_1_e_1 = be_2;
-    #endif
-    // HOHO HAHA
 #ifdef INTERPRET
     const static refalrts::ResultAction raa[] = {
-      {refalrts::icEPush, &bb_0, &be_0, 0},
-      {refalrts::icBracketLeft, &bb_1, &be_1, 0},
-      {refalrts::icEPush, &bb_0, &be_0, 0},
-      {refalrts::icBracketLeft, &bb_2, &be_2, 0},
-      {refalrts::icEmpty, &bb_0, &be_0, 0},
-      {refalrts::icContextSet, &bb_1, &be_1, __eFilePath_1_1},
-      {refalrts::icContextSet, &bb_2, &be_2, __eText_1_1},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & WriteLine, (void*) "WriteLine"},
-      {refalrts::icSpliceEVar, 0, 0, __eFilePath_1_1},
+      {refalrts::icSpliceEVar, & eFilePath_1_b_1, & eFilePath_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & WriteLine, (void*) "WriteLine"},
-      {refalrts::icSpliceEVar, 0, 0, __eText_1_1},
+      {refalrts::icSpliceEVar, & eText_1_b_1, & eText_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & WriteToHandle, (void*) "WriteToHandle"},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & FOpen, (void*) "FOpen"},
       {refalrts::icChar, 0, 0, 'w'},
-      {refalrts::icCopyEVar, 0, 0, __eFilePath_1_1},
+      {refalrts::icCopyEVar, & eFilePath_1_b_1, & eFilePath_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
-      {refalrts::icCopyEVar, 0, 0, __eText_1_1},
+      {refalrts::icCopyEVar, & eText_1_b_1, & eText_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icEnd}
     };
     refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-    //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-    // new engine
-    refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+    refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
     return res;
 #else
 
@@ -197,47 +158,31 @@ static refalrts::FnResult TT(refalrts::Iter arg_begin, refalrts::Iter arg_end) {
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // issue here memory for vars with 4 elems
-    refalrts::Iter context[4];
-    refalrts::zeros( context, 4);
-    const int __eX_1_1 = 0;
     static refalrts::Iter eX_1_b_1;
     static refalrts::Iter eX_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [X] Depth[1] Usings[1]
-    const int __eY_1_1 = 2;
     static refalrts::Iter eY_1_b_1;
     static refalrts::Iter eY_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [Y] Depth[1] Usings[1]
     // e.X#1 e.Y#1
     eX_1_b_1 = 0;
     eX_1_e_1 = 0;
     do {
       refalrts::Iter bb_1 = bb_0;
       refalrts::Iter be_1 = be_0;
-      #ifndef INTERPRET
       eY_1_b_1 = bb_1;
       eY_1_e_1 = be_1;
-      #endif
-      // HOHO HAHA
 #ifdef INTERPRET
       const static refalrts::ResultAction raa[] = {
-        {refalrts::icContextSet, &bb_1, &be_1, __eY_1_1},
         {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
         {refalrts::icFunc, (void*) & WriteLine, (void*) "WriteLine"},
         {refalrts::icBracket, 0, 0, refalrts::ibOpenBracket},
-        {refalrts::icSpliceEVar, 0, 0, __eX_1_1},
-        {refalrts::icSpliceEVar, 0, 0, __eY_1_1},
+        {refalrts::icSpliceEVar, & eX_1_b_1, & eX_1_e_1},
+        {refalrts::icSpliceEVar, & eY_1_b_1, & eY_1_e_1},
         {refalrts::icBracket, 0, 0, refalrts::ibCloseBracket},
         {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
         {refalrts::icEnd}
       };
       refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-      //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-      // new engine
-      refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+      refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
       return res;
 #else
 
@@ -288,37 +233,17 @@ static refalrts::FnResult WriteToHandle(refalrts::Iter arg_begin, refalrts::Iter
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // issue here memory for vars with 4 elems
-    refalrts::Iter context[4];
-    refalrts::zeros( context, 4);
-    const int __tFile_1_1 = 0;
     static refalrts::Iter tFile_1_1;
-    
-    //debug ::varInfo:: Mode[t] Index [File] Depth[1] Usings[1]
-    const int __eLine_1_1 = 1;
     static refalrts::Iter eLine_1_b_1;
     static refalrts::Iter eLine_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [Line] Depth[1] Usings[1]
-    const int __tFile_1_2 = 3;
     static refalrts::Iter tFile_1_2;
-    
-    //debug ::varInfo:: Mode[t] Index [File] Depth[1] Usings[2]
     // t.File#1 e.Line#1
-    #ifndef INTERPRET
     if( ! refalrts::tvar_left( tFile_1_1, bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     eLine_1_b_1 = bb_0;
     eLine_1_e_1 = be_0;
-    #endif
-    // HOHO HAHA
 #ifdef INTERPRET
     const static refalrts::ResultAction raa[] = {
-      {refalrts::ictVarLeft, &bb_0, &be_0, __tFile_1_1},
-      {refalrts::icContextSet, &bb_0, &be_0, __eLine_1_1},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & WriteLine, (void*) "WriteLine"},
       {refalrts::icChar, 0, 0, 'W'},
@@ -334,19 +259,17 @@ static refalrts::FnResult WriteToHandle(refalrts::Iter arg_begin, refalrts::Iter
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & FWriteLine, (void*) "FWriteLine"},
-      {refalrts::icSpliceSTVar, 0, 0, __tFile_1_1},
-      {refalrts::icSpliceEVar, 0, 0, __eLine_1_1},
+      {refalrts::icSpliceSTVar, & tFile_1_1},
+      {refalrts::icSpliceEVar, & eLine_1_b_1, & eLine_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & FClose, (void*) "FClose"},
-      {refalrts::icCopySTVar, 0, 0, __tFile_1_1},
+      {refalrts::icCopySTVar, & tFile_1_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icEnd}
     };
     refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-    //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-    // new engine
-    refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+    refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
     return res;
 #else
 
@@ -458,18 +381,11 @@ refalrts::FnResult Go(refalrts::Iter arg_begin, refalrts::Iter arg_end) {
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // Warning - storage with 0 elems!
-    
-    refalrts::Iter context[0];
     //
-    #ifndef INTERPRET
     if( ! refalrts::empty_seq( bb_0, be_0 ) )
       break;
-    #endif
 #ifdef INTERPRET
     const static refalrts::ResultAction raa[] = {
-      {refalrts::icEmpty, &bb_0, &be_0, 0},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & Func, (void*) "Func"},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenBracket},
@@ -493,9 +409,7 @@ refalrts::FnResult Go(refalrts::Iter arg_begin, refalrts::Iter arg_end) {
       {refalrts::icEnd}
     };
     refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-    //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-    // new engine
-    refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+    refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
     return res;
 #else
 

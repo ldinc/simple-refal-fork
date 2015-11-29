@@ -20,46 +20,27 @@ static refalrts::FnResult Func(refalrts::Iter arg_begin, refalrts::Iter arg_end)
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // issue here memory for vars with 2 elems
-    refalrts::Iter context[2];
-    refalrts::zeros( context, 2);
-    const int __eX_1_1 = 0;
     static refalrts::Iter eX_1_b_1;
     static refalrts::Iter eX_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [X] Depth[1] Usings[1]
     // ( e.X#1 )
     refalrts::Iter bb_1 = 0;
     refalrts::Iter be_1 = 0;
-    #ifndef INTERPRET
     if( ! refalrts::brackets_left( bb_1, be_1, bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     if( ! refalrts::empty_seq( bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     eX_1_b_1 = bb_1;
     eX_1_e_1 = be_1;
-    #endif
 #ifdef INTERPRET
     const static refalrts::ResultAction raa[] = {
-      {refalrts::icEPush, &bb_0, &be_0, 0},
-      {refalrts::icBracketLeft, &bb_1, &be_1, 0},
-      {refalrts::icEmpty, &bb_0, &be_0, 0},
-      {refalrts::icContextSet, &bb_1, &be_1, __eX_1_1},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & WriteLine, (void*) "WriteLine"},
-      {refalrts::icSpliceEVar, 0, 0, __eX_1_1},
+      {refalrts::icSpliceEVar, & eX_1_b_1, & eX_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icEnd}
     };
     refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-    //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-    // new engine
-    refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+    refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
     return res;
 #else
 
@@ -99,57 +80,32 @@ static refalrts::FnResult Write(refalrts::Iter arg_begin, refalrts::Iter arg_end
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // issue here memory for vars with 3 elems
-    refalrts::Iter context[3];
-    refalrts::zeros( context, 3);
-    const int __eX_1_1 = 0;
     static refalrts::Iter eX_1_b_1;
     static refalrts::Iter eX_1_e_1;
-    
-    //debug ::varInfo:: Mode[e] Index [X] Depth[1] Usings[1]
-    const int __sSome_1_1 = 2;
     static refalrts::Iter sSome_1_1;
-    
-    //debug ::varInfo:: Mode[s] Index [Some] Depth[1] Usings[1]
     // ( e.X#1 s.Some#1 )
     refalrts::Iter bb_1 = 0;
     refalrts::Iter be_1 = 0;
-    #ifndef INTERPRET
     if( ! refalrts::brackets_left( bb_1, be_1, bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     if( ! refalrts::empty_seq( bb_0, be_0 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     if( ! refalrts::svar_right( sSome_1_1, bb_1, be_1 ) )
       break;
-    #endif
-    #ifndef INTERPRET
     eX_1_b_1 = bb_1;
     eX_1_e_1 = be_1;
-    #endif
 #ifdef INTERPRET
     const static refalrts::ResultAction raa[] = {
-      {refalrts::icEPush, &bb_0, &be_0, 0},
-      {refalrts::icBracketLeft, &bb_1, &be_1, 0},
-      {refalrts::icEmpty, &bb_0, &be_0, 0},
-      {refalrts::icsVarRight, &bb_1, &be_1, __sSome_1_1},
-      {refalrts::icContextSet, &bb_1, &be_1, __eX_1_1},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & Func, (void*) "Func"},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenBracket},
-      {refalrts::icSpliceEVar, 0, 0, __eX_1_1},
+      {refalrts::icSpliceEVar, & eX_1_b_1, & eX_1_e_1},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseBracket},
       {refalrts::icBracket, 0, 0, refalrts::ibCloseCall},
       {refalrts::icEnd}
     };
     refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-    //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-    // new engine
-    refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+    refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
     return res;
 #else
 
@@ -198,18 +154,11 @@ refalrts::FnResult Go(refalrts::Iter arg_begin, refalrts::Iter arg_end) {
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_left( bb_0, be_0 );
     refalrts::move_right( bb_0, be_0 );
-    //debug ?!
-    // Warning - storage with 0 elems!
-    
-    refalrts::Iter context[0];
     //
-    #ifndef INTERPRET
     if( ! refalrts::empty_seq( bb_0, be_0 ) )
       break;
-    #endif
 #ifdef INTERPRET
     const static refalrts::ResultAction raa[] = {
-      {refalrts::icEmpty, &bb_0, &be_0, 0},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenCall},
       {refalrts::icFunc, (void*) & Write, (void*) "Write"},
       {refalrts::icBracket, 0, 0, refalrts::ibOpenBracket},
@@ -227,9 +176,7 @@ refalrts::FnResult Go(refalrts::Iter arg_begin, refalrts::Iter arg_end) {
       {refalrts::icEnd}
     };
     refalrts::Iter allocs[2*sizeof(raa)/sizeof(raa[0])];
-    //refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
-    // new engine
-    refalrts::FnResult res = refalrts::new_interpret_array( raa, allocs, context, arg_begin, arg_end );
+    refalrts::FnResult res = refalrts::interpret_array( raa, allocs, arg_begin, arg_end );
     return res;
 #else
 
